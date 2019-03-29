@@ -8,6 +8,7 @@ const Campground = require("./models/campground");
 const Comment = require("./models/comment");
 const User = require("./models/user");
 const seedDb = require("./seeds");
+const methodOverride = require("method-override");
 
 //Routes Files
 const commentRoutes = require("./routes/comments");
@@ -18,6 +19,7 @@ mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 //seedDb();
 
