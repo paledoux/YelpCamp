@@ -62,7 +62,12 @@ router.put("/:id", checkCampgroundOwership, function(req, res){
 
 router.delete("/:id", checkCampgroundOwership, function(req, res){
     Campground.findByIdAndRemove(req.params.id, function(err){
-        res.redirect("/campgrounds");
+        if(err){
+            res.redirect("back");
+        }else{
+            res.redirect("/campgrounds");
+        }
+        
     });
 })
 
