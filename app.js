@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const Campground = require("./models/campground");
@@ -9,6 +10,7 @@ const Comment = require("./models/comment");
 const User = require("./models/user");
 const seedDb = require("./seeds");
 const methodOverride = require("method-override");
+
 
 //Routes Files
 const commentRoutes = require("./routes/comments");
@@ -20,6 +22,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use(flash());
 
 //seedDb();
 
@@ -38,6 +41,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
